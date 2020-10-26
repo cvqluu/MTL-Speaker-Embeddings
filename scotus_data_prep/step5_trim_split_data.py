@@ -78,7 +78,7 @@ def fix_data_dir(data_dir):
 
     if utt2age:
         os.rename(os.path.join(data_dir, 'utt2age'), os.path.join(data_dir, 'utt2age_old'))
-        os.system('./filter_scp.pl {} {} > {}'.format(blank_utts, os.path.join(data_dir, 'utt2age'),
+        os.system('./filter_scp.pl {} {} > {}'.format(blank_utts, os.path.join(data_dir, 'utt2age_old'),
                                                   os.path.join(data_dir, 'utt2age')))
 
 
@@ -293,7 +293,7 @@ if __name__ == "__main__":
 
     print('Making recording split...')
     with open(os.path.join(args.base_outfolder, 'recording_split.json'), 'w+', encoding='utf-8') as fp:
-        recdict = {'train': train_recs, 'test': test_recs}
+        recdict = {'train': list(train_recs), 'test': list(test_recs)}
         json.dump(recdict, fp)
     
     print('Splitting verification data...')
@@ -305,17 +305,17 @@ if __name__ == "__main__":
     veri_lines = ['{} {} {}\n'.format(l, a, b) for l, a, b in zip(labs, u0, u1)]
     write_lines(veri_lines, os.path.join(veri_data_dir, 'test/veri_pairs'))
 
-    print('Now fixing diarization data...')
-    diar_data_dir = os.path.join(args.base_outfolder, 'diar_data_nosil')
-    assert os.path.isdir(diar_data_dir), "Couldn't find {}".format(diar_data_dir)
-    shutil.copy(os.path.join(args.base_outfolder, 'diar_data/real_utt2spk'), veri_data_dir)
-    shutil.copy(os.path.join(args.base_outfolder, 'veri_data/segments'), veri_data_dir)
-    shutil.copy(os.path.join(args.base_outfolder, 'diar_data/ref.rttm'), veri_data_dir)
+    # print('Now fixing diarization data...')
+    # diar_data_dir = os.path.join(args.base_outfolder, 'diar_data_nosil')
+    # assert os.path.isdir(diar_data_dir), "Couldn't find {}".format(diar_data_dir)
+    # shutil.copy(os.path.join(args.base_outfolder, 'diar_data/real_utt2spk'), veri_data_dir)
+    # shutil.copy(os.path.join(args.base_outfolder, 'veri_data/segments'), veri_data_dir)
+    # shutil.copy(os.path.join(args.base_outfolder, 'diar_data/ref.rttm'), veri_data_dir)
 
-    fix_data_dir(diar_data_dir)
+    # fix_data_dir(diar_data_dir)
 
-    print('Splitting diarization data...')
-    split_data_dir(diar_data_dir, train_recs, test_recs)
+    # print('Splitting diarization data...')
+    # split_data_dir(diar_data_dir, train_recs, test_recs)
 
 
     print('Done!!')
