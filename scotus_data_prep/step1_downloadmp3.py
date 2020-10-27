@@ -8,7 +8,6 @@ from glob import glob
 
 import numpy as np
 import requests
-import wget
 from tqdm import tqdm
 
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -224,7 +223,7 @@ if __name__ == '__main__':
     base_transcript_folder = os.path.join(base_outfolder, 'transcripts')
     os.makedirs(base_transcript_folder, exist_ok=True)
 
-    cases = glob(os.path.join(case_folder, '20*'))
+    cases = glob(os.path.join(case_folder, '20*.json'))
     print('{} cases found'.format(len(cases)))
 
     assert len(cases) > 1, "Could only find 1 or less case json files"

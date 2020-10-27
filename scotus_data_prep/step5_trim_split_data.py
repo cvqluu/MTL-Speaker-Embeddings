@@ -305,17 +305,17 @@ if __name__ == "__main__":
     veri_lines = ['{} {} {}\n'.format(l, a, b) for l, a, b in zip(labs, u0, u1)]
     write_lines(veri_lines, os.path.join(veri_data_dir, 'test/veri_pairs'))
 
-    # print('Now fixing diarization data...')
-    # diar_data_dir = os.path.join(args.base_outfolder, 'diar_data_nosil')
-    # assert os.path.isdir(diar_data_dir), "Couldn't find {}".format(diar_data_dir)
-    # shutil.copy(os.path.join(args.base_outfolder, 'diar_data/real_utt2spk'), veri_data_dir)
-    # shutil.copy(os.path.join(args.base_outfolder, 'veri_data/segments'), veri_data_dir)
-    # shutil.copy(os.path.join(args.base_outfolder, 'diar_data/ref.rttm'), veri_data_dir)
+    print('Now fixing diarization data...')
+    diar_data_dir = os.path.join(args.base_outfolder, 'diar_data_nosil')
+    assert os.path.isdir(diar_data_dir), "Couldn't find {}".format(diar_data_dir)
+    shutil.copy(os.path.join(args.base_outfolder, 'diar_data/real_utt2spk'), veri_data_dir)
+    shutil.copy(os.path.join(args.base_outfolder, 'veri_data/segments'), veri_data_dir)
+    shutil.copy(os.path.join(args.base_outfolder, 'diar_data/ref.rttm'), veri_data_dir)
 
-    # fix_data_dir(diar_data_dir)
+    fix_data_dir(diar_data_dir)
 
-    # print('Splitting diarization data...')
-    # split_data_dir(diar_data_dir, train_recs, test_recs)
+    print('Splitting diarization data...')
+    split_data_dir(diar_data_dir, train_recs, test_recs)
 
 
     print('Done!!')

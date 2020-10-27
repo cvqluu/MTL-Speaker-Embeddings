@@ -18,8 +18,7 @@ import wptools
 from bs4 import BeautifulSoup
 from dateutil.relativedelta import relativedelta
 from Levenshtein import distance as lev_dist
-from local_info import (AVVO_API_ACCESS_TOKEN, AVVO_CSE_ID, GOOGLE_API_KEY,
-                        WIKI_CSE_ID)
+from local_info import (AVVO_API_ACCESS_TOKEN, AVVO_CSE_ID, GOOGLE_API_KEY)
 from tqdm import tqdm
 
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -44,7 +43,6 @@ class LawyerDOBParser:
 
         self.google_api_key = GOOGLE_API_KEY
         self.avvo_cse_id = AVVO_CSE_ID
-        self.wiki_cse_id = WIKI_CSE_ID
 
     def parse_name(self, name):
         '''
@@ -411,6 +409,10 @@ class LawyerDOBParser:
 
 
 if __name__ == "__main__":
+    assert AVVO_API_ACCESS_TOKEN, "AVVO_API_ACCESS_TOKEN in local_info.py needs to be filled out"
+    assert AVVO_CSE_ID, "AVVO_CSE_ID in local_info.py needs to be filled out"
+    assert GOOGLE_API_KEY, "GOOGLE_API_KEY in local_info.py needs to be filled out"
+
     args = parse_args()
     base_outfolder = args.base_outfolder
     assert os.path.isdir(base_outfolder)
@@ -449,6 +451,9 @@ if __name__ == "__main__":
         infos[s] = info
         pickle.dump(dobs, open(pickle_path, 'wb'))
         pickle.dump(infos, open(info_pickle_path, 'wb'))
+    
+    num_dob_speakers = sum([1 for s in dobs if dobs[s]])
 
+    print('Found DoB for {} out of {} speakers'.format(num_dob_speakers, len(speaker_ids)))
     print('Done!')
 
