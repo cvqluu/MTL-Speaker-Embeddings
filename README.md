@@ -251,4 +251,84 @@ TODO
 
 # Experiments
 
-TODO
+Training an embedding extractor is done via `train.py`:
+
+```sh
+python train.py --cfg configs/example.cfg
+```
+
+This runs according to the config file `configs/example.cfg` which we will detail and explain below. The following config file trains an xvector architecture embedding extractor with an age classification head with 10 classes and 0.1 weighting of the age loss function.
+
+
+```ini
+[Datasets]
+# Path to the datasets
+train = /PATH_TO_BASE_OUTFOLDER/veri_data_nosil/train
+test = /PATH_TO_BASE_OUTFOLDER/veri_data_nosil/test
+
+[Model]
+# Allowed model_type : ['XTDNN', 'ETDNN']
+model_type = XTDNN
+# Allowed classifier_heads types:
+# ['speaker', 'nationality', 'gender', 'age', 'age_regression', 'rec']
+classifier_heads = speaker,age
+
+[Optim]
+# Allowed classifier_types: 
+# ['xvec', 'adm', 'adacos', 'l2softmax', 'xvec_regression', 'arcface', 'sphereface']
+classifier_types = xvec,xvec
+classifier_lr_mults = [1.0, 1.0]
+classifier_loss_weights = [1.0, 0.1]
+# Allowed smooth_types:
+# ['twoneighbour', 'uniform']
+classifier_smooth_types = none,none
+
+[Hyperparams]
+lr = 0.2
+batch_size = 500
+max_seq_len = 350
+no_cuda = False
+seed = 1234
+num_iterations = 50000
+momentum = 0.5
+scheduler_steps = [40000]
+scheduler_lambda = 0.5
+multi_gpu = False
+classifier_lr_mult = 1.
+embedding_dim = 256
+
+[Outputs]
+model_dir = exp/example_exp
+checkpoint_interval = 500
+
+[Misc]
+num_age_bins = 10
+```
+
+Most of the parameters in this configuration file are fairly self explanatory.
+
+The most important setup is the `classifier_heads` field, which determines what tasks are being applied to the embedding. This also determines the number of parameters in each field in `[Optim]`, which have to match the number of classifier heads.
+
+The currently supported tasks are `'speaker', 'nationality', 'gender', 'age', 'age_regression', 'rec'`, and each has a requirement for the data that must be present in both train and test folders order for this to be evaluated:
+
+- `age` and  `age_regression`
+    - Age classification or Age regression
+    - Requires: `utt2age` file
+        - 2 column file of format:
+        - `<utt> <age(int)>`
+- `gender`
+    - Gender classification
+    - Requires: `spk2gender` file
+        - 2 column file of format:
+        - `<spk> <gender(str/int)>`
+- `nationality`
+    - Nationality classification
+    - Requires `spk2nat` file
+        - 2 column file of format:
+        - `<spk> <nationality(str/int)>`
+- `rec`
+    - Recording ID classification
+    - This is typically accompanied by a negative loss weight. When a negative loss weight is given, this automatically applies a Gradient Reversal Layer (GRL) to that classification head.
+    - Requires `utt2rec` file (but not in test folder):
+        - 2 column file of format:
+        - `<utt> <rec(str)>`
