@@ -34,7 +34,7 @@ def parse_args():
     parser.add_argument('--cfg', type=str,
                         default='./configs/example_speaker.cfg')
     parser.add_argument('--checkpoint', type=int,
-                        default=0, help='Choose a specific iteration to evaluate on instead of the best wrec')
+                        default=0, help='Choose a specific iteration to evaluate on instead of the best eer')
     parser.add_argument('--diar-data', type=str,
                         default='/disk/scratch2/s1786813/repos/supreme_court_transcripts/oyez/scotus_diarization_nosil/test')
     args = parser.parse_args()
@@ -50,7 +50,7 @@ def lines_to_file(lines, filename, wmode="w+"):
 
 
 def get_eer_metrics(folder):
-    rpkl_path = os.path.join(folder, 'wrec_results.p')
+    rpkl_path = os.path.join(folder, 'results.p')
     rpkl = pickle.load(open(rpkl_path, 'rb'))
     iterations = list(rpkl.keys())
     eers = [rpkl[k]['test_eer'] for k in rpkl]
@@ -285,9 +285,9 @@ if __name__ == "__main__":
     args = parse_args()
     args = parse_config(args)
     uvloop.install()
-    rpkl_path = os.path.join(args.model_dir, 'wrec_results.p')
+    rpkl_path = os.path.join(args.model_dir, 'results.p')
     if not os.path.isfile(rpkl_path):
-        print('No wrec_results.p found')
+        print('No results.p found')
     else:
         device = torch.device('cuda')
 
