@@ -18,7 +18,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Prep the data for verification, diarization and feature extraction')
     parser.add_argument('--base-outfolder', type=str, help='Location of the base outfolder')
     parser.add_argument('--train-proportion', type=float, default=0.8, help='Train proportion (default: 0.8)')
-    parser.add_argument('--pos-per-spk', type=int, default=15, help='Positive trials per speaker')
+    parser.add_argument('--pos-per-spk', type=int, default=10, help='Positive trials per speaker')
     args = parser.parse_args()
     return args
 
@@ -308,9 +308,9 @@ if __name__ == "__main__":
     print('Now fixing diarization data...')
     diar_data_dir = os.path.join(args.base_outfolder, 'diar_data_nosil')
     assert os.path.isdir(diar_data_dir), "Couldn't find {}".format(diar_data_dir)
-    shutil.copy(os.path.join(args.base_outfolder, 'diar_data/real_utt2spk'), veri_data_dir)
-    shutil.copy(os.path.join(args.base_outfolder, 'veri_data/segments'), veri_data_dir)
-    shutil.copy(os.path.join(args.base_outfolder, 'diar_data/ref.rttm'), veri_data_dir)
+    shutil.copy(os.path.join(args.base_outfolder, 'diar_data/real_utt2spk'), diar_data_dir)
+    shutil.copy(os.path.join(args.base_outfolder, 'diar_data/segments'), diar_data_dir)
+    shutil.copy(os.path.join(args.base_outfolder, 'diar_data/ref.rttm'), diar_data_dir)
 
     fix_data_dir(diar_data_dir)
 
