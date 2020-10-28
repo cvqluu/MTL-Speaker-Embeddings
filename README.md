@@ -207,6 +207,7 @@ source path.sh
 bash step4_extract_feats.sh
 ```
 
+
 ## Making train/test splits
 
 After changing back your working directory to `scotus_data_prep`, we can run the final stage script.
@@ -249,6 +250,7 @@ $BASE_OUTFOLDER
 
 TODO
 
+
 # Experiments
 
 Training an embedding extractor is done via `train.py`:
@@ -259,6 +261,8 @@ python train.py --cfg configs/example.cfg
 
 This runs according to the config file `configs/example.cfg` which we will detail and explain below. The following config file trains an xvector architecture embedding extractor with an age classification head with 10 classes and 0.1 weighting of the age loss function.
 
+
+## Config File
 
 ```ini
 [Datasets]
@@ -284,6 +288,7 @@ classifier_loss_weights = [1.0, 0.1]
 classifier_smooth_types = none,none
 
 [Hyperparams]
+input_dim = 30
 lr = 0.2
 batch_size = 500
 max_seq_len = 350
@@ -299,6 +304,7 @@ embedding_dim = 256
 
 [Outputs]
 model_dir = exp/example_exp
+# At each checkpoint, the model will be evaluated on the test data, and the model will be saved
 checkpoint_interval = 500
 
 [Misc]
@@ -308,6 +314,9 @@ num_age_bins = 10
 Most of the parameters in this configuration file are fairly self explanatory.
 
 The most important setup is the `classifier_heads` field, which determines what tasks are being applied to the embedding. This also determines the number of parameters in each field in `[Optim]`, which have to match the number of classifier heads.
+
+
+## Supported Auxiliary Tasks
 
 The currently supported tasks are `'speaker', 'nationality', 'gender', 'age', 'age_regression', 'rec'`, and each has a requirement for the data that must be present in both train and test folders order for this to be evaluated:
 
@@ -332,3 +341,12 @@ The currently supported tasks are `'speaker', 'nationality', 'gender', 'age', 'a
     - Requires `utt2rec` file (but not in test folder):
         - 2 column file of format:
         - `<utt> <rec(str)>`
+
+
+## Resuming training
+
+The following command will resume an experiment from the checkpoint at 25000 iterations:
+
+```sh
+python train.py --cfg configs/example.cfg --resume-checkpoint 25000
+```
