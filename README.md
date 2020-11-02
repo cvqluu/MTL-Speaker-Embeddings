@@ -5,7 +5,9 @@ The overall concept of this paper is that training speaker embedding extractors 
 
 This is implemented by having multiple task-specific "heads" acting on the embeddings, such as x-vectors. Alongside speaker classification, one might employ age classification/regression, or nationality classification. A general diagram for this can be seen below:
 
-![model_fig](figures/multitask.png?raw=true "multitask_diag")
+<p align="center">
+  <img src="figures/multitask.png?raw=true">
+</p>
 
 Along with experimental code, this repository covers other data preparation tasks used in the paper, such as webscraping age information for lawyers in SCOTUS, and nationality for Wikipedia celebrities.
 
