@@ -1,7 +1,13 @@
 # Multi Task Learning Speaker Embeddings
-Code for the paper: "Leveraging speaker attribute information using multi task learning for speaker verification and diarization" submitted to ICASSP 2021.
+Code for the paper: ["Leveraging speaker attribute information using multi task learning for speaker verification and diarization"](https://arxiv.org/abs/2010.14269) submitted to ICASSP 2021.
 
-Along with experimental code, this repo covers webscraping age information for lawyers in SCOTUS, and nationality for Wikipedia celebrities.
+The overall concept of this paper is that training speaker embedding extractors on auxiliary attributes (such as age or nationality) alongside speaker classification can lead to increased performance for verification and diarization. Training the embeddings in this multi-task fashion can improve the descriptiveness of the embedding space.
+
+This is implemented by having multiple task-specific "heads" acting on the embeddings, such as x-vectors. Alongside speaker classification, one might employ age classification/regression, or nationality classification. A general diagram for this can be seen below:
+
+![model_fig](figures/multitask.png?raw=true "multitask_diag")
+
+Along with experimental code, this repository covers other data preparation tasks used in the paper, such as webscraping age information for lawyers in SCOTUS, and nationality for Wikipedia celebrities.
 
 # Contents
 
