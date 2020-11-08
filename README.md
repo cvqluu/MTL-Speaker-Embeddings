@@ -92,7 +92,7 @@ $BASE_OUTFOLDER
 
 Sometimes, downloading audio files may fail, but succeed on subsequent attempts. This script is safe to run multiple times, and will try and re-download files that are missing (while skipping ones that already have been processed).
 
-If you have used my fork for `$SCOTUS_CASE_REPO` then you should end up with 2035 mp3s/jsons in the audio and transcripts folders respectively, although this may not be consistentent, depending on the availability of every mp3.
+If you have used my fork for `$SCOTUS_CASE_REPO` then you should end up with 2035 mp3s/jsons in the audio and transcripts folders respectively, although this may not be consistent, depending on the availability of every mp3.
  
 ## Web scraping
 
