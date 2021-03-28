@@ -1,5 +1,5 @@
 # Multi Task Learning Speaker Embeddings
-Code for the paper: ["Leveraging speaker attribute information using multi task learning for speaker verification and diarization"](https://arxiv.org/abs/2010.14269) submitted to ICASSP 2021.
+Code for the paper: ["Leveraging speaker attribute information using multi task learning for speaker verification and diarization"](https://arxiv.org/abs/2010.14269)
 
 The overall concept of this paper is that training speaker embedding extractors on auxiliary attributes (such as age or nationality) alongside speaker classification can lead to increased performance for verification and diarization. Training the embeddings in this multi-task fashion can improve the descriptiveness of the embedding space.
 
