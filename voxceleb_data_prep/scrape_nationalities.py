@@ -72,7 +72,7 @@ if __name__ == "__main__":
             search = wikipedia.search(qname, results=3)
             if len(search) == 0:
                 print(name)
-                break
+                continue
             else:
                 index = 0
                 while True:
@@ -90,7 +90,7 @@ if __name__ == "__main__":
         if qname == 'nan':
             #Couldn't find a good wikipedia page
             print(name)
-            break
+            continue
         
         #Try the infobox first
         try:
