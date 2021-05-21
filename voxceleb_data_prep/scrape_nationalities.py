@@ -1,10 +1,6 @@
-import os
-import pickle
 from collections import Counter, OrderedDict
 from pprint import pprint
 
-import nltk
-import numpy as np
 import pandas as pd
 import spacy
 import wikipedia
