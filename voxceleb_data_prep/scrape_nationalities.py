@@ -38,22 +38,25 @@ if __name__ == "__main__":
         
     nat_country_dict = {n.lower():c.lower() for c, n in zip(natcountry.Country.values, natcountry.Nationality.values)}
 
-    # Reorder country nat_dict based on demographics of vox1
-    # Most populous first
-    common_nats = vox1.Nationality.str.lower().value_counts().keys()
+	# Reorder country nat_dict based on demographics of vox1
+	# Most populous first
+	# Then by length of country name
+	# This is to make sure the country names which are substrings are not checked first
+	common_nats = vox1.Nationality.str.lower().value_counts().keys()
 
-    common_nats_keys = []
-    for c in common_nats:
-        common_nats_keys.append(nat_country_dict[c])
-        
-    ordered_country_nat_dict = OrderedDict({})
-    for c in common_nats_keys:
-        ordered_country_nat_dict[c] = country_nat_dict[c]
-        
-    for c in country_nat_dict:
-        if c not in ordered_country_nat_dict:
-            ordered_country_nat_dict[c] = country_nat_dict[c]
+	common_nats_keys = []
+	for c in common_nats:
+		common_nats_keys.append(nat_country_dict[c])
+		
+	ordered_country_nat_dict = OrderedDict({})
+	for c in common_nats_keys:
+		ordered_country_nat_dict[c] = country_nat_dict[c]
 
+	countries_by_len = sorted(country_nat_dict.keys(), key=len, reverse=True)    
+
+	for c in countries_by_len:
+		if c not in ordered_country_nat_dict:
+			ordered_country_nat_dict[c] = country_nat_dict[c]
 
     vox2_names = list(vox2_id_to_name.values())
     vox2_nationalities = OrderedDict({k:[] for k in vox2_names})
