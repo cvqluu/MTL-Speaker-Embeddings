@@ -47,7 +47,7 @@ if __name__ == "__main__":
 	common_nats_keys = []
 	for c in common_nats:
 		common_nats_keys.append(nat_country_dict[c])
-		
+
 	ordered_country_nat_dict = OrderedDict({})
 	for c in common_nats_keys:
 		ordered_country_nat_dict[c] = country_nat_dict[c]
