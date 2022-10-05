@@ -19,9 +19,15 @@ def wiki_infobox(text):
 
 
 if __name__ == "__main__":
+    # Meta information of vox1, same as original filename
     vox1 = pd.read_csv('./data/vox1_meta.csv', delimiter='\t')
+
+    # Meta information of vox2, same as original filename
     vox2 = pd.read_csv('./data/vox2_meta.csv')
+	
+    # Meta information of vggface2, original filename meta/identity_meta.csv 
     vgg2 = pd.read_csv('./data/vggface2_meta.csv', quotechar='"', skipinitialspace=True)
+	
     us_states = set(pd.read_csv('./data/us_states.csv')['States'].str.lower().values)
 
     vgg_id_to_name = {k:v.strip() for k,v in zip(vgg2['Class_ID'].values, vgg2['Name'].values)}
